@@ -105,21 +105,18 @@ class Pipe:
                 self.display.blit(self.PIPE_RED_TOP, item['pipe_top'])
                 self.display.blit(self.PIPE_RED_BASE, item['pipe_base'])
 
-    # Verificando se houve "colisão do passaro com os canos"
-    def collide(self, bird:Bird) -> list:
-        var_listCollide = []
-        for item in self.var_listItens:
-            bird_mask = self.var_clssBird.get_mask(bird)
-            top_mask = pg.mask.from_surface(self.PIPE_GREEN_TOP)
-            base_mask = pg.mask.from_surface(self.PIPE_GREEN_BASE)
+    # Verificando se houve "colisão do passaro com o cano"
+    def collide(self, pipe, bird:Bird) -> list:
+        bird_mask = self.var_clssBird.get_mask(bird)
 
-            distance_top = (item['pipe_top'].x - bird['x'], item['pipe_top'].y - round(bird['y']))
-            distance_base = (item['pipe_base'].x - bird['x'], item['pipe_base'].y - round(bird['y']))
+        top_mask = pg.mask.from_surface(self.PIPE_GREEN_TOP)
+        base_mask = pg.mask.from_surface(self.PIPE_GREEN_BASE)
 
-            point_top = bird_mask.overlap(top_mask, distance_top)
-            point_base = bird_mask.overlap(base_mask, distance_base)
+        distance_top = (pipe['pipe_top'].x - bird['x'], pipe['pipe_top'].y - round(bird['y']))
+        distance_base = (pipe['pipe_base'].x - bird['x'], pipe['pipe_base'].y - round(bird['y']))
 
-            if point_top or point_base: var_listCollide.append(True)
-            else: var_listCollide.append(False)
-        
-        return var_listCollide
+        point_top = bird_mask.overlap(top_mask, distance_top)
+        point_base = bird_mask.overlap(base_mask, distance_base)
+
+        if point_top or point_base: return True
+        else: return False
