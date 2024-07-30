@@ -139,7 +139,6 @@ class Main:
                     break
                 
                 if event.type == pygame.KEYDOWN:
-
                     # Caso NÃO seja a IA jogando 
                     if not var_boolPlayerIA:
                         # Caso o "space" tenha acionado "o(s) passaros pulam"
